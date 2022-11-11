@@ -1,0 +1,25 @@
+apiVersion: skaffold/v2beta29
+kind: Config
+metadata:
+  name: vitadairy-reward-be-test
+build:
+  local:
+    push: false
+  artifacts:
+    - image: vtri/multi-client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+    - image: vtri/multi-server
+      context: server
+      docker:
+        dockerfile: Dockerfile
+    - image: vtri/multi-worker
+      context: worker
+      docker:
+        dockerfile: Dockerfile
+
+deploy:
+  kubectl:
+    manifests:
+      - k8s/*
